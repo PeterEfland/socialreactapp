@@ -1,11 +1,11 @@
 import React, { useEffect, useState, useContext } from "react";
 import Axios from "axios";
-import ExampleContext from "../ExampleContext";
+import DispatchContext from "../DispatchContext";
 
 function HeaderLoggedOut(props) {
+  const appDispatch = useContext(DispatchContext);
   const [username, setUsername] = useState();
   const [password, setPassword] = useState();
-  const { setLoggedIn } = useContext(ExampleContext);
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -15,10 +15,7 @@ function HeaderLoggedOut(props) {
         password,
       });
       if (response.data) {
-        localStorage.setItem("socialappToken", response.data.token);
-        localStorage.setItem("socialappUsername", response.data.username);
-        localStorage.setItem("socialappPassword", response.data.password);
-        setLoggedIn(true);
+        appDispatch({ type: "login", data: response.data });
       } else {
         console.log("Incorrect username / password");
       }
