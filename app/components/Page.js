@@ -5,7 +5,7 @@ function Page(props) {
   useEffect(() => {
     document.title = `${props.title} | SocialApp`;
     window.scrollTo(0, 0);
-  }, []);
+  }, [props.title]);
 
   return (
     <Container title={props.title} wide={props.wide}>
